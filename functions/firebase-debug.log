@@ -1,19 +1,29 @@
-[debug] [2019-03-23T18:05:54.162Z] ----------------------------------------------------------------------
-[debug] [2019-03-23T18:05:54.165Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\manual-pc\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
-[debug] [2019-03-23T18:05:54.165Z] CLI Version:   6.5.0
-[debug] [2019-03-23T18:05:54.165Z] Platform:      win32
-[debug] [2019-03-23T18:05:54.165Z] Node Version:  v10.15.3
-[debug] [2019-03-23T18:05:54.167Z] Time:          Sat Mar 23 2019 23:35:54 GMT+0530 (India Standard Time)
-[debug] [2019-03-23T18:05:54.167Z] ----------------------------------------------------------------------
+[debug] [2019-03-23T18:21:35.086Z] ----------------------------------------------------------------------
+[debug] [2019-03-23T18:21:35.093Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\manual-pc\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2019-03-23T18:21:35.094Z] CLI Version:   6.5.0
+[debug] [2019-03-23T18:21:35.094Z] Platform:      win32
+[debug] [2019-03-23T18:21:35.094Z] Node Version:  v10.15.3
+[debug] [2019-03-23T18:21:35.097Z] Time:          Sat Mar 23 2019 23:51:35 GMT+0530 (India Standard Time)
+[debug] [2019-03-23T18:21:35.097Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2019-03-23T18:05:54.181Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2019-03-23T18:05:54.182Z] > authorizing via signed-in user
-[debug] [2019-03-23T18:05:54.182Z] [iam] checking project libri-9746e for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
-[debug] [2019-03-23T18:05:54.185Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/libri-9746e:testIamPermissions  
+[debug] [2019-03-23T18:21:35.126Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-03-23T18:21:35.129Z] > authorizing via signed-in user
+[debug] [2019-03-23T18:21:35.129Z] [iam] checking project libri-9746e for permissions ["firebase.projects.get"]
+[debug] [2019-03-23T18:21:35.136Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/libri-9746e:testIamPermissions  
 
-[debug] [2019-03-23T18:05:55.524Z] <<< HTTP RESPONSE 200
+[debug] [2019-03-23T18:21:36.517Z] <<< HTTP RESPONSE 200
+[debug] [2019-03-23T18:21:36.521Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/libri-9746e  
+ 
+[debug] [2019-03-23T18:21:37.912Z] <<< HTTP RESPONSE 200
 [info] 
-[info] === Deploying to 'libri-9746e'...
+[info] === Serving from 'I:\Ionic\Libri-server'...
 [info] 
-[info] i  deploying functions
-[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[info] i  functions: Preparing to emulate functions.
+[debug] [2019-03-23T18:21:40.318Z] Fetching environment
+[debug] [2019-03-23T18:21:40.322Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/893322827741:getServerAppConfig  
+ 
+[debug] [2019-03-23T18:21:40.745Z] <<< HTTP RESPONSE 200
+[debug] [2019-03-23T18:21:40.746Z] Starting @google-cloud/functions-emulator
+[debug] [2019-03-23T18:21:43.839Z] Parsing function triggers
+[info] +  functions: helloWorld: http://localhost:5000/libri-9746e/us-central1/helloWorld
+[info] +  functions: createNewUser: http://localhost:5000/libri-9746e/us-central1/createNewUser

@@ -10,19 +10,27 @@ export const helloWorld = functions.https.onRequest((request, response) => {
 });
 
 
-export const createNewUser = admin.auth().createUser({
-    email: "user@example.com",
-    emailVerified: false,
-    phoneNumber: "+11234567890",
-    password: "secretPassword",
-    displayName: "John Doe",
-    photoURL: "http://www.example.com/12345678/photo.png",
-    disabled: false
-  })
-    .then(function(userRecord) {
-      // See the UserRecord reference doc for the contents of userRecord.
-      console.log("Successfully created new user:", userRecord.uid);
-    })
-    .catch(function(error) {
-      console.log("Error creating new user:", error);
-    });
+export const createNewUser = functions.https.onRequest((request, response) => {
+    admin.auth().createUser({
+        email: "use1ra@example.com",
+        emailVerified: false,
+        phoneNumber: "+112345678901",
+        password: "secretPassword",
+        displayName: "John Doe1",
+        photoURL: "http://www.example.com/12345678/photo.png",
+        disabled: false
+      })
+        .then(function(userRecord) {
+          // See the UserRecord reference doc for the contents of userRecord.
+        response.send("User Created success");
+
+          console.log("Successfully created new user:", userRecord.uid);
+        })
+        .catch(function(error) {
+          console.log("Error creating new user:", error);
+            response.send("User Creation Failed");
+
+        });
+   });
+   
+
