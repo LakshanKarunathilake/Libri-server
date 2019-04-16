@@ -43,3 +43,21 @@ export const unsubscribeFromTopic = functions.https.onCall(async data => {
 
   return `unsubscribed from ${data.topic}`;
 });
+
+export const sendNoticeCreation = functions.firestore
+  .document("notices/{noticeID}")
+  .onCreate(async snapshot => {
+    const notice = snapshot.data() || {};
+
+    const notification: admin.messaging.Notification = {
+      title: "Library notice !",
+      body: notice.body
+    };
+
+    const payload: admin.messaging.Message = {
+      notification,
+      topic: "notices"
+    };
+
+    return admin.messaging().send(payload);
+  });
