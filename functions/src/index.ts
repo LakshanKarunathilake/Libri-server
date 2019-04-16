@@ -31,3 +31,15 @@ export const createNewUser = functions.https.onRequest((request, response) => {
       response.send(error.errorInfo.message);
     });
 });
+
+export const subscribeToTopic = functions.https.onCall(async data => {
+  await admin.messaging().subscribeToTopic(data.token, data.topic);
+
+  return `subscribed to ${data.topic}`;
+});
+
+export const unsubscribeFromTopic = functions.https.onCall(async data => {
+  await admin.messaging().unsubscribeFromTopic(data.token, data.topic);
+
+  return `unsubscribed from ${data.topic}`;
+});
