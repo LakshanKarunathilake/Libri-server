@@ -75,7 +75,7 @@ export const captchaValidate = functions.https.onRequest((req, res) => {
     },
     json: true
   })
-    .then(result => {
+    .then((result: any) => {
       console.log("recaptcha result", result);
       if (result.success) {
         res.send("You're good to go, human.");
@@ -83,7 +83,7 @@ export const captchaValidate = functions.https.onRequest((req, res) => {
         res.send("Recaptcha verification failed. Are you a robot?");
       }
     })
-    .catch(reason => {
+    .catch((reason: any) => {
       console.log("Recaptcha request failure", reason);
       res.send("Recaptcha request failed.");
     });
