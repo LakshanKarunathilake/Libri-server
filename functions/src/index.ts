@@ -4,6 +4,7 @@ import * as admin from "firebase-admin";
 // Initializing Firebase App
 admin.initializeApp();
 
+const rp = require("request-promise");
 // Basic helloworld function
 export const helloWorld = functions.https.onRequest((request, response) => {
   response.send("Hello from Firebase!");
@@ -61,3 +62,29 @@ export const sendNoticeCreation = functions.firestore
 
     return admin.messaging().send(payload);
   });
+
+export const captchaValidate = functions.https.onRequest((req, res) => {
+  const response = req.query.response;
+  console.log("recaptcha response", response);
+  rp({
+    uri: "https://recaptcha.google.com/recaptcha/api/siteverify",
+    method: "POST",
+    formData: {
+      secret: "PASTE_YOUR_SECRET_CODE_HERE",
+      response: response
+    },
+    json: true
+  })
+    .then(result => {
+      console.log("recaptcha result", result);
+      if (result.success) {
+        res.send("You're good to go, human.");
+      } else {
+        res.send("Recaptcha verification failed. Are you a robot?");
+      }
+    })
+    .catch(reason => {
+      console.log("Recaptcha request failure", reason);
+      res.send("Recaptcha request failed.");
+    });
+});
