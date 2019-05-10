@@ -88,3 +88,35 @@ export const captchaValidate = functions.https.onRequest((req, res) => {
       res.send("Recaptcha request failed.");
     });
 });
+
+exports.createUserDocument = functions.auth.user().onCreate(user => {
+  const {
+    displayName,
+    disabled,
+    email,
+    emailVerified,
+    phoneNumber,
+    photoURL,
+    uid
+  } = user;
+
+  admin
+    .firestore()
+    .collection("users")
+    .add({
+      displayName,
+      disabled,
+      email,
+      emailVerified,
+      phoneNumber,
+      photoURL,
+      uid
+    })
+    .then(() => {
+      console.log("Successfull updated user details" + user.email);
+    })
+    .catch(error => {
+      console.error("Error occured while registering the user details");
+      console.error(error);
+    });
+});
