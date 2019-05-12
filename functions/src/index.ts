@@ -51,13 +51,13 @@ export const sendNoticeCreation = functions.firestore
     const notice = snapshot.data() || {};
 
     const notification: admin.messaging.Notification = {
-      title: "Library notice !",
-      body: notice.body
+      title: notice.title,
+      body: notice.message
     };
 
     const payload: admin.messaging.Message = {
       notification,
-      topic: "notices"
+      topic: notice.topic
     };
 
     return admin.messaging().send(payload);
