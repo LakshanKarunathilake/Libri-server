@@ -89,34 +89,13 @@ export const captchaValidate = functions.https.onRequest((req, res) => {
     });
 });
 
-exports.createUserDocument = functions.auth.user().onCreate(user => {
-  const {
-    displayName,
-    disabled,
-    email,
-    emailVerified,
-    phoneNumber,
-    photoURL,
-    uid
-  } = user;
-
-  admin
-    .firestore()
-    .collection("users")
-    .add({
-      displayName,
-      disabled,
-      email,
-      emailVerified,
-      phoneNumber,
-      photoURL,
-      uid
-    })
-    .then(() => {
-      console.log("Successfull updated user details" + user.email);
-    })
-    .catch(error => {
-      console.error("Error occured while registering the user details");
-      console.error(error);
-    });
-});
+export const getRegisteredUsers = functions.https.onRequest(
+  async (req, res) => {
+    const users = await admin.auth().listUsers();
+    if (users) {
+      res.send(users);
+    } else {
+      res.send("Empty");
+    }
+  }
+);
