@@ -5,6 +5,9 @@ import * as admin from "firebase-admin";
 admin.initializeApp();
 
 const rp = require("request-promise");
+const cors = require("cors")({
+  origin: true
+});
 // Basic helloworld function
 export const helloWorld = functions.https.onRequest((request, response) => {
   response.send("Hello from Firebase!");
@@ -89,13 +92,16 @@ export const captchaValidate = functions.https.onRequest((req, res) => {
     });
 });
 
-export const getRegisteredUsers = functions.https.onRequest(
-  async (req, res) => {
+export const getRegisteredUsers = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
     const users = await admin.auth().listUsers();
+    console.log("Requested for registered users");
     if (users) {
-      res.send(users);
+      console.log("Sending registered user list");
+      res.status(200).send({ data: { users, msg: "Success" } });
     } else {
-      res.send("Empty");
+      console.log("Sending empty message");
+      res.status(200).send({ data: { msg: "Empty" } });
     }
-  }
-);
+  });
+});
