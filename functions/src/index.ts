@@ -107,12 +107,7 @@ export const getRegisteredUsers = functions.https.onRequest((req, res) => {
       };
     });
     console.log("Requested for registered users");
-    if (users) {
-      console.log("Sending registered user list");
-      res.status(200).send({ data: { ...allusers, msg: "Success" } });
-    } else {
-      console.log("Sending empty message");
-      res.status(200).send({ data: { msg: "Empty" } });
-    }
+    console.log("Sending registered user list");
+    res.status(200).send({ data: { ...allusers } });
   });
 });
