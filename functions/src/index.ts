@@ -94,15 +94,16 @@ export const captchaValidate = functions.https.onRequest((req, res) => {
 
 export const getRegisteredUsers = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {
-    let users = await admin.auth().listUsers();
+    const users = await admin.auth().listUsers();
     const allusers = users.users.map(user => {
       return {
         email: user.email,
         displayName: user.displayName,
         verified: user.emailVerified,
-        metadata: user.metadata,
         disabled: user.disabled,
-        phoneNumber: user.phoneNumber
+        phoneNumber: user.phoneNumber,
+        created: user.metadata.creationTime,
+        lastLogin: user.metadata.lastSignInTime
       };
     });
     console.log("Requested for registered users");
