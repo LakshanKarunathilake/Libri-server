@@ -94,11 +94,21 @@ export const captchaValidate = functions.https.onRequest((req, res) => {
 
 export const getRegisteredUsers = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {
-    const users = await admin.auth().listUsers();
+    let users = await admin.auth().listUsers();
+    const allusers = users.users.map(user => {
+      return {
+        email: user.email,
+        displayName: user.displayName,
+        verified: user.emailVerified,
+        metadata: user.metadata,
+        disabled: user.disabled,
+        phoneNumber: user.phoneNumber
+      };
+    });
     console.log("Requested for registered users");
     if (users) {
       console.log("Sending registered user list");
-      res.status(200).send({ data: { users, msg: "Success" } });
+      res.status(200).send({ data: { ...allusers, msg: "Success" } });
     } else {
       console.log("Sending empty message");
       res.status(200).send({ data: { msg: "Empty" } });
