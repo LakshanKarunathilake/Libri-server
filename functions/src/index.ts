@@ -98,7 +98,7 @@ export const getRegisteredUsers = functions.https.onRequest((req, res) => {
     const allusers = users.users.map(user => {
       return {
         email: user.email,
-        displayName: user.displayName,
+        displayName: user.displayName || "",
         verified: user.emailVerified,
         disabled: user.disabled,
         phoneNumber: user.phoneNumber,
