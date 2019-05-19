@@ -3,7 +3,7 @@ import * as admin from "firebase-admin";
 
 // Initializing Firebase App
 admin.initializeApp();
-
+const libriFuntions = require("./libri/app-functions");
 const rp = require("request-promise");
 const cors = require("cors")({
   origin: true
