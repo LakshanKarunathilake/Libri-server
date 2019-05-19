@@ -4,10 +4,10 @@ const mysql = require("mysql");
  * TODO(developer): specify SQL connection details
  */
 const connectionName =
-  process.env.INSTANCE_CONNECTION_NAME || "<YOUR INSTANCE CONNECTION NAME>";
-const dbUser = process.env.SQL_USER || "<YOUR DB USER>";
-const dbPassword = process.env.SQL_PASSWORD || "<YOUR DB PASSWORD>";
-const dbName = process.env.SQL_NAME || "<YOUR DB NAME>";
+  process.env.INSTANCE_CONNECTION_NAME || "libri-238805:asia-east1:libri";
+const dbUser = process.env.SQL_USER || "libri-app";
+const dbPassword = process.env.SQL_PASSWORD || "Manual@123";
+const dbName = process.env.SQL_NAME || "koha_library";
 
 const mysqlConfig = {
   connectionLimit: 1,
