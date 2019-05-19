@@ -13,7 +13,8 @@ const mysqlConfig = {
   connectionLimit: 1,
   user: dbUser,
   password: dbPassword,
-  database: dbName
+  database: dbName,
+  socketPath: ""
 };
 if (process.env.NODE_ENV === "production") {
   mysqlConfig.socketPath = `/cloudsql/${connectionName}`;
@@ -21,9 +22,9 @@ if (process.env.NODE_ENV === "production") {
 
 // Connection pools reuse connections between invocations,
 // and handle dropped or expired connections automatically.
-let mysqlPool;
+let mysqlPool: any;
 
-exports.mysqlDemo = (req, res) => {
+exports.mysqlDemo = (req: any, res: any) => {
   // Initialize the pool lazily, in case SQL access isn't needed for this
   // GCF instance. Doing so minimizes the number of active SQL connections,
   // which helps keep your GCF instances under SQL connection limits.
@@ -31,7 +32,7 @@ exports.mysqlDemo = (req, res) => {
     mysqlPool = mysql.createPool(mysqlConfig);
   }
 
-  mysqlPool.query("SELECT NOW() AS now", (err, results) => {
+  mysqlPool.query("SELECT NOW() AS now", (err: any, results: any) => {
     if (err) {
       console.error(err);
       res.status(500).send(err);
@@ -44,4 +45,17 @@ exports.mysqlDemo = (req, res) => {
   // Keep any declared in global scope (e.g. mysqlPool) for later reuse.
 };
 
-export const checkAccountAvailable = (req, res) => {};
+export const checkAccountAvailable = async (req: any, res: any) => {
+  if (!mysqlPool) {
+    mysqlPool = mysql.createPool(mysqlConfig);
+  }
+
+  await mysqlPool.query("SELECT NOW() AS now", (err: any, results: any) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send({ data: { err } });
+    } else {
+      res.send({ data: { result: JSON.stringify(results) } });
+    }
+  });
+};
