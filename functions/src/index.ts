@@ -111,3 +111,9 @@ export const getRegisteredUsers = functions.https.onRequest((req, res) => {
     res.status(200).send({ data: { ...allusers } });
   });
 });
+
+export const isUserIdAvailable = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    await libriFuntions.checkAccountAvailable(req, res);
+  });
+});
