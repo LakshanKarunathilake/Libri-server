@@ -49,13 +49,17 @@ export const checkAccountAvailable = async (req: any, res: any) => {
   if (!mysqlPool) {
     mysqlPool = mysql.createPool(mysqlConfig);
   }
-
-  await mysqlPool.query("SELECT NOW() AS now", (err: any, results: any) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send({ data: { err } });
-    } else {
-      res.send({ data: { result: JSON.stringify(results) } });
+  const id = req.body.data.id || "SE/2014/011";
+  console.log("Query id", id);
+  await mysqlPool.query(
+    `SELECT borrowernumber,cardnumber from borrowers where cardnumber like '${id}'`,
+    (err: any, results: any) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send({ data: { err } });
+      } else {
+        res.send({ data: { result: JSON.stringify(results) } });
+      }
     }
-  });
+  );
 };
