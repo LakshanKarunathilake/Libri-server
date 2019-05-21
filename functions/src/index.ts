@@ -8,10 +8,6 @@ const rp = require("request-promise");
 const cors = require("cors")({
   origin: true
 });
-// Basic helloworld function
-export const helloWorld = functions.https.onRequest((request, response) => {
-  response.send("Hello from Firebase!");
-});
 
 export const createNewUser = functions.https.onRequest((request, response) => {
   admin
