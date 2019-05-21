@@ -63,3 +63,22 @@ export const checkAccountAvailable = async (req: any, res: any) => {
     }
   );
 };
+export const getBooks = async (req: any, res: any) => {
+  if (!mysqlPool) {
+    mysqlPool = mysql.createPool(mysqlConfig);
+  }
+  const value = req.body.data.value || "";
+  const column = req.body.data.type || "title";
+  console.log();
+  await mysqlPool.query(
+    `SELECT * from biblio where ${column} like '%${value}%'`,
+    (err: any, results: any) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send({ data: { err } });
+      } else {
+        res.send({ data: { result: JSON.stringify(results) } });
+      }
+    }
+  );
+};
