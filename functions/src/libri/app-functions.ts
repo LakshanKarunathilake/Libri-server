@@ -7,7 +7,7 @@ const connectionName =
   process.env.INSTANCE_CONNECTION_NAME || "libri-238805:asia-east1:libri";
 const dbUser = process.env.SQL_USER || "libri-app";
 const dbPassword = process.env.SQL_PASSWORD || "Manual@123";
-const dbName = process.env.SQL_NAME || "koha_library";
+const dbName = process.env.SQL_NAME || "koha";
 
 const mysqlConfig = {
   connectionLimit: 1,
