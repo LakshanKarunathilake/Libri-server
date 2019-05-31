@@ -116,6 +116,6 @@ export const isUserIdAvailable = functions.https.onRequest((req, res) => {
 
 export const searchBook = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {
-    await libriFuntions.searchBook(req, res);
+    await libriFuntions.getBooks(req, res);
   });
 });
