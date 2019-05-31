@@ -45,6 +45,12 @@ exports.mysqlDemo = (req: any, res: any) => {
   // Keep any declared in global scope (e.g. mysqlPool) for later reuse.
 };
 
+/**
+ * Checking whether user is available in the library database.
+ * If user is not registered or an active user of the libaray he/she may not be able to do some functionalities
+ * @param req
+ * @param res
+ */
 export const checkAccountAvailable = async (req: any, res: any) => {
   if (!mysqlPool) {
     mysqlPool = mysql.createPool(mysqlConfig);
@@ -63,6 +69,12 @@ export const checkAccountAvailable = async (req: any, res: any) => {
     }
   );
 };
+
+/**
+ *Retreve book records from the mysql database according to the user entered value
+ * @param req
+ * @param res
+ */
 export const getBooks = async (req: any, res: any) => {
   if (!mysqlPool) {
     mysqlPool = mysql.createPool(mysqlConfig);
