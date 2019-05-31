@@ -68,10 +68,27 @@ export const getBooks = async (req: any, res: any) => {
     mysqlPool = mysql.createPool(mysqlConfig);
   }
   const value = req.body.data.value || "";
-  const column = req.body.data.type || "title";
-  console.log();
+  const column = req.body.data.column || "title";
   await mysqlPool.query(
-    `SELECT * from biblio where ${column} like '%${value}%'`,
+    `SELECT biblio.biblionumber,biblio.title,biblio.author,biblio.abstract,biblio.copyrightdate,biblioitems.biblioitemnumber,biblioitems.isbn,biblioitems.url FROM biblio,biblioitems where biblio.biblionumber = biblioitems.biblionumber AND biblio.${column} like '%${value}%' LIMIT 20`,
+    (err: any, results: any) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send({ data: { err } });
+      } else {
+        res.send({ data: { result: JSON.stringify(results) } });
+      }
+    }
+  );
+};
+
+export const getPersonalBorrowings = async (req: any, res: any) => {
+  if (!mysqlPool) {
+    mysqlPool = mysql.createPool(mysqlConfig);
+  }
+  const id = req.body.data.id || "";
+  await mysqlPool.query(
+    `select issue_id,itemnumber,date_due,returndate,issuedate from issues where borrowernumber == ${id}`,
     (err: any, results: any) => {
       if (err) {
         console.error(err);
