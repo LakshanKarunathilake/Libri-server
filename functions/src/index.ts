@@ -119,3 +119,15 @@ export const searchBook = functions.https.onRequest((req, res) => {
     await libriFuntions.getBooks(req, res);
   });
 });
+
+export const personalBorrowings = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    await libriFuntions.getPersonalBorrowings(req, res);
+  });
+});
+
+export const penaltyPayment = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    await libriFuntions.penaltyPayment(req, res);
+  });
+});
