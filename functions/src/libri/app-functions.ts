@@ -111,3 +111,9 @@ export const getPersonalBorrowings = async (req: any, res: any) => {
     }
   );
 };
+
+export const processPenaltyPayment = async (req: any, res: any) => {
+  console.log("processing payment");
+  console.log("req", req);
+  res.send({ data: { msg: "successfully saved" } });
+};
