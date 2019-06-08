@@ -128,6 +128,6 @@ export const personalBorrowings = functions.https.onRequest((req, res) => {
 
 export const penaltyPayment = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {
-    await libriFuntions.penaltyPayment(req, res);
+    await libriFuntions.processPenaltyPayment(req, res);
   });
 });
