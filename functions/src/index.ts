@@ -131,3 +131,9 @@ export const penaltyPayment = functions.https.onRequest((req, res) => {
     await libriFuntions.processPenaltyPayment(req, res);
   });
 });
+
+export const isBookTransferable = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    await libriFuntions.bookTransferable(req, res);
+  });
+});
