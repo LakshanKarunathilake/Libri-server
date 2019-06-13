@@ -117,3 +117,9 @@ export const processPenaltyPayment = async (req: any, res: any) => {
   console.log("req", req);
   res.send({ data: { msg: "successfully saved" } });
 };
+
+export const isBookTransferable = async (req: any, res: any) => {
+  console.log("processing payment");
+  console.log("req", req);
+  res.send({ data: { msg: "successfully saved" } });
+};
