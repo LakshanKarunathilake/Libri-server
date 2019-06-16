@@ -72,8 +72,8 @@ export const checkAccountAvailable = async (req: any, res: any) => {
 
 /**
  *Retreve book records from the mysql database according to the user entered value
- * @param req
- * @param res
+ * @param req The request may contain the information about the user query such as value.type
+ * @param res The response which will be sent back to the user containing the information of book list
  */
 export const getBooks = async (req: any, res: any) => {
   if (!mysqlPool) {
@@ -94,6 +94,11 @@ export const getBooks = async (req: any, res: any) => {
   );
 };
 
+/**
+ * Quering the information about the borrowings registered under a library user
+ * @param req The information about the user will be included : id
+ * @param res The borrowing details
+ */
 export const getPersonalBorrowings = async (req: any, res: any) => {
   if (!mysqlPool) {
     mysqlPool = mysql.createPool(mysqlConfig);
@@ -112,12 +117,23 @@ export const getPersonalBorrowings = async (req: any, res: any) => {
   );
 };
 
+/**
+ * This method includes registration of penalty payments under users and updating the book receive status
+ * @param req Information about the user and the book issue
+ * @param res Success information
+ */
 export const processPenaltyPayment = async (req: any, res: any) => {
   console.log("processing payment");
   console.log("req", req);
   res.send({ data: { msg: "successfully saved" } });
 };
 
+/**
+ * Checking whether the book is valid for a transfer. The book may not be valid if the last seen data is more than 1 month.
+ * The amount of days can be adjusted as library prefer. Next thing is if the book is reserved it won't be able to transfer. Then if the book is overdue transfer will be halted
+ * @param req Information about the book and the transaction
+ * @param res Response for the request whether it is doable or not and if not why it is so
+ */
 export const isBookTransferable = async (req: any, res: any) => {
   console.log("processing payment");
   console.log("req", req);
