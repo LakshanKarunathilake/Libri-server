@@ -137,3 +137,9 @@ export const isBookTransferable = functions.https.onRequest((req, res) => {
     await libriFuntions.bookTransferable(req, res);
   });
 });
+
+export const isBookAvailable = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    await libriFuntions.isBookAvailable(req, res);
+  });
+});
