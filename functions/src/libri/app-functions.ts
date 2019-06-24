@@ -143,6 +143,22 @@ export const isBookTransferable = async (req: any, res: any) => {
 /**
  * Find whether the book is currently availble or not
  * @param req Contains the biblio number and item number
- * @param res true/false whether book availble
+ * @param res Return the onloan status if avilable the date or if not as null
  */
-export const isBookAvailable = async (req: any, res: any) => {};
+export const isBookAvailable = async (req: any, res: any) => {
+  if (!mysqlPool) {
+    mysqlPool = mysql.createPool(mysqlConfig);
+  }
+  const id = req.body.data.id || "";
+  await mysqlPool.query(
+    `select onloan from items where items.biblionumber == ${id}`,
+    (err: any, results: any) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send({ data: { err } });
+      } else {
+        res.send({ data: { result: JSON.stringify(results) } });
+      }
+    }
+  );
+};
