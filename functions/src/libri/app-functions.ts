@@ -139,3 +139,10 @@ export const isBookTransferable = async (req: any, res: any) => {
   console.log("req", req);
   res.send({ data: { msg: "successfully saved" } });
 };
+
+/**
+ * Find whether the book is currently availble or not
+ * @param req Contains the biblio number and item number
+ * @param res true/false whether book availble
+ */
+export const isBookAvailable = async (req: any, res: any) => {};
