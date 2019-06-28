@@ -150,14 +150,17 @@ export const isBookAvailable = async (req: any, res: any) => {
     mysqlPool = mysql.createPool(mysqlConfig);
   }
   const id = req.body.data.biblionumber || "";
+  console.log("id", id);
   await mysqlPool.query(
-    `select onloan from items where items.biblionumber == ${id}`,
+    `select onloan from items where items.biblionumber like '${id}'`,
     (err: any, results: any) => {
       if (err) {
         console.error(err);
         res.status(500).send({ data: { err } });
       } else {
-        res.send({ data: { result: JSON.stringify(results) } });
+        const loanDetails = results[0]["onloan"];
+        console.log("loanDetails", loanDetails);
+        res.send({ data: { loanDate: loanDetails } });
       }
     }
   );
