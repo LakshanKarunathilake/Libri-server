@@ -158,7 +158,10 @@ export const isBookAvailable = async (req: any, res: any) => {
         console.error(err);
         res.status(500).send({ data: { err } });
       } else {
-        const loanDetails = results[0]["onloan"];
+        let loanDetails = "";
+        if (results.length > 0) {
+          loanDetails = results[0]["onloan"];
+        }
         console.log("loanDetails", loanDetails);
         res.send({ data: { loanDate: loanDetails } });
       }
