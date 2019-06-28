@@ -149,7 +149,7 @@ export const isBookAvailable = async (req: any, res: any) => {
   if (!mysqlPool) {
     mysqlPool = mysql.createPool(mysqlConfig);
   }
-  const id = req.body.data.id || "";
+  const id = req.body.data.biblionumber || "";
   await mysqlPool.query(
     `select onloan from items where items.biblionumber == ${id}`,
     (err: any, results: any) => {
