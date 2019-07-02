@@ -120,7 +120,7 @@ export const searchBook = functions.https.onRequest((req, res) => {
   });
 });
 
-export const personalBorrowings = functions.https.onRequest((req, res) => {
+export const getPersonalBorrowings = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {
     await libriFuntions.getPersonalBorrowings(req, res);
   });
