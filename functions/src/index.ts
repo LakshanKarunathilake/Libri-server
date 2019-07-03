@@ -120,7 +120,7 @@ export const searchBook = functions.https.onRequest((req, res) => {
   });
 });
 
-export const personalBorrowings = functions.https.onRequest((req, res) => {
+export const getPersonalBorrowings = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {
     await libriFuntions.getPersonalBorrowings(req, res);
   });
@@ -135,5 +135,11 @@ export const penaltyPayment = functions.https.onRequest((req, res) => {
 export const isBookTransferable = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {
     await libriFuntions.bookTransferable(req, res);
+  });
+});
+
+export const isBookAvailable = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    await libriFuntions.isBookAvailable(req, res);
   });
 });
