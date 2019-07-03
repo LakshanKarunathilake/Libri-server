@@ -135,7 +135,20 @@ export const processPenaltyPayment = async (req: any, res: any) => {
  * @param res Response for the request whether it is doable or not and if not why it is so
  */
 export const isBookTransferable = async (req: any, res: any) => {
-  console.log("processing payment");
-  console.log("req", req);
-  res.send({ data: { msg: "successfully saved" } });
+  if (!mysqlPool) {
+    mysqlPool = mysql.createPool(mysqlConfig);
+  }
+  const id = req.body.data.id || "";
+  // Checking whether the due date is passed
+  await mysqlPool.query(
+    `select date_due from issues where issue_id == ${id}`,
+    (err: any, results: any) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send({ data: { err } });
+      } else {
+        res.send({ data: { result: JSON.stringify(results) } });
+      }
+    }
+  );
 };
