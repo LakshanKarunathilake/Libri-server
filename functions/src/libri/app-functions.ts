@@ -104,8 +104,9 @@ export const getPersonalBorrowings = async (req: any, res: any) => {
     mysqlPool = mysql.createPool(mysqlConfig);
   }
   const id = req.body.data.id || "";
+  console.log("id", id);
   await mysqlPool.query(
-    `select issue_id,itemnumber,date_due,returndate,issuedate from issues where borrowernumber == ${id}`,
+    `select issue_id,itemnumber,date_due,returndate,issuedate from issues where borrowernumber = '${id}'`,
     (err: any, results: any) => {
       if (err) {
         console.error(err);
