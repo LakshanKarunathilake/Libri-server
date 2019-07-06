@@ -126,6 +126,12 @@ export const getPersonalBorrowings = functions.https.onRequest((req, res) => {
   });
 });
 
+export const getOldUserBorrowings = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    await libriFuntions.getOldUserBorrowings(req, res);
+  });
+});
+
 export const penaltyPayment = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {
     await libriFuntions.processPenaltyPayment(req, res);
