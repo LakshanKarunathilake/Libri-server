@@ -119,6 +119,30 @@ export const getPersonalBorrowings = async (req: any, res: any) => {
 };
 
 /**
+ * Quering the information about the borrowings registered under a library user and already completed
+ * @param req The information about the user will be included : id
+ * @param res The borrowing details
+ */
+export const getOldUserBorrowings = async (req: any, res: any) => {
+  if (!mysqlPool) {
+    mysqlPool = mysql.createPool(mysqlConfig);
+  }
+  const id = req.body.data.id || "";
+  console.log("id", id);
+  await mysqlPool.query(
+    `select issue_id,itemnumber,date_due,returndate,issuedate from issues where borrowernumber = '${id}'`,
+    (err: any, results: any) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send({ data: { err } });
+      } else {
+        res.send({ data: { result: JSON.stringify(results) } });
+      }
+    }
+  );
+};
+
+/**
  * This method includes registration of penalty payments under users and updating the book receive status
  * @param req Information about the user and the book issue
  * @param res Success information
