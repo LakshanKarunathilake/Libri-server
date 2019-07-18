@@ -130,7 +130,7 @@ export const getOldUserBorrowings = async (req: any, res: any) => {
   const id = req.body.data.id || "";
   console.log("id", id);
   await mysqlPool.query(
-    `select issue_id,date_due,returndate,issuedate,issues.renewals,biblio.title from issues,biblio,items where borrowernumber = '${id}' and issues.itemnumber = items.itemnumber and items.biblionumber = biblio.biblionumber'`,
+    `select issue_id,date_due,returndate,issuedate,issues.renewals,biblio.title from issues,biblio,items,borrowers where borrowers.cardnumber = '${id}' and issues.itemnumber = items.itemnumber and items.biblionumber = biblio.biblionumber and borrowers.borrowernumber = issues.borrowernumber`,
     (err: any, results: any) => {
       if (err) {
         console.error(err);
