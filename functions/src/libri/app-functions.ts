@@ -106,7 +106,7 @@ export const getPersonalBorrowings = async (req: any, res: any) => {
   const id = req.body.data.id || "";
   console.log("id", id);
   await mysqlPool.query(
-    `select issue_id,itemnumber,date_due,returndate,issuedate from issues where borrowernumber = '${id}'`,
+    `Select issue_id,date_due,returndate,issuedate,issues.renewals,biblio.title from issues,biblio,items,borrowers where borrowers.cardnumber like '${id}' and issues.itemnumber = items.itemnumber and items.biblionumber = biblio.biblionumber and borrowers.borrowernumber = issues.borrowernumber`,
     (err: any, results: any) => {
       if (err) {
         console.error(err);
@@ -130,7 +130,7 @@ export const getOldUserBorrowings = async (req: any, res: any) => {
   const id = req.body.data.id || "";
   console.log("id", id);
   await mysqlPool.query(
-    `Select issue_id,date_due,returndate,issuedate,issues.renewals,biblio.title from issues,biblio,items,borrowers where borrowers.cardnumber like '${id}' and issues.itemnumber = items.itemnumber and items.biblionumber = biblio.biblionumber and borrowers.borrowernumber = issues.borrowernumber`,
+    `select issue_id,itemnumber,date_due,returndate,issuedate from issues where borrowernumber = '${id}'`,
     (err: any, results: any) => {
       if (err) {
         console.error(err);
