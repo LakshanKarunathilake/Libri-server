@@ -80,18 +80,23 @@ export const getBooks = async (req: any, res: any) => {
     mysqlPool = mysql.createPool(mysqlConfig);
   }
   const value = req.body.data.value || "";
-  const column = req.body.data.column || "title";
-  await mysqlPool.query(
-    `SELECT biblio.biblionumber,biblio.title,biblio.author,biblio.abstract,biblio.copyrightdate,biblioitems.biblioitemnumber,biblioitems.isbn,biblioitems.url FROM biblio,biblioitems where biblio.biblionumber = biblioitems.biblionumber AND biblio.${column} like '%${value}%' LIMIT 20`,
-    (err: any, results: any) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send({ data: { err } });
-      } else {
-        res.send({ data: { result: JSON.stringify(results) } });
-      }
+  const column = req.body.data.type || "title";
+  let query;
+
+  if (column === "both") {
+    query = `SELECT biblio.biblionumber,biblio.title,biblio.author,biblio.abstract,biblio.copyrightdate,biblioitems.biblioitemnumber,biblioitems.isbn,biblioitems.url FROM biblio,biblioitems where biblio.biblionumber = biblioitems.biblionumber AND biblio.title like '%${value}%' OR biblio.author like '%${value}%' LIMIT 20`;
+  } else {
+    query = `SELECT biblio.biblionumber,biblio.title,biblio.author,biblio.abstract,biblio.copyrightdate,biblioitems.biblioitemnumber,biblioitems.isbn,biblioitems.url FROM biblio,biblioitems where biblio.biblionumber = biblioitems.biblionumber AND biblio.${column} like '%${value}%' LIMIT 20`;
+  }
+  console.log("Searching query", query);
+  await mysqlPool.query(query, (err: any, results: any) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send({ data: { err } });
+    } else {
+      res.send({ data: { result: JSON.stringify(results) } });
     }
-  );
+  });
 };
 
 /**
