@@ -121,7 +121,8 @@ export const getRegisteredUsers = functions.https.onRequest((req, res) => {
         disabled: user.disabled,
         phoneNumber: user.phoneNumber,
         created: user.metadata.creationTime,
-        lastLogin: user.metadata.lastSignInTime
+        lastLogin: user.metadata.lastSignInTime,
+        uid: user.uid
       };
     });
     console.log("Requested for registered users");
