@@ -171,3 +171,9 @@ export const isBookAvailable = functions.https.onRequest((req, res) => {
     await libriFuntions.isBookAvailable(req, res);
   });
 });
+
+export const enableOrDisableUser = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    await dashboardFunctions.enableOrDisableUser(req, res);
+  });
+});
