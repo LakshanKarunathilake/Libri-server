@@ -63,6 +63,27 @@ export const sendNoticeCreation = functions.firestore
     return admin.messaging().send(payload);
   });
 
+export const sendMessageToDevice = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    const token = req.body.data.token;
+    const msg = req.body.data.msg;
+    const title = req.body.data.title;
+
+    const payload: admin.messaging.MessagingPayload = { data: { msg, title } };
+    admin
+      .messaging()
+      .sendToDevice(token, payload)
+      .then(() => {
+        console.log("Message sent success");
+        res.status(200).send({ data: {} });
+      })
+      .catch(err => {
+        console.log("Message sent Failure");
+        res.status(500).send(err);
+      });
+  });
+});
+
 export const captchaValidate = functions.https.onRequest((req, res) => {
   const response = req.query.response;
   console.log("recaptcha response", response);
